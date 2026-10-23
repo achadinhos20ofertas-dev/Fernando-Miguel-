@@ -1,13 +1,16 @@
-CONVITE DO FERNANDO MIGUEL — ARQUIVOS PARA GITHUB E RENDER
+CONVITE FERNANDO MIGUEL — ARQUIVOS PRONTOS PARA GITHUB E RENDER
 
-O site é estático. As páginas e imagens estão na pasta dist.
+Os arquivos deste ZIP já estão todos juntos na raiz. Não crie pastas.
 
-PUBLICAR NO RENDER
-1. Extraia este ZIP e envie os arquivos para um repositório no GitHub.
-2. No Render, escolha New > Static Site e conecte o repositório.
-3. Deixe Root Directory vazio.
-4. Build Command: echo "Site estático"
-5. Publish Directory: dist
-6. Clique em Create Static Site.
+1. Extraia o ZIP no celular ou computador.
+2. No GitHub, abra o repositório Fernando-Miguel-.
+3. Toque em Add file > Upload files e envie TODOS os arquivos extraídos.
+4. Confirme em Commit changes.
+5. No Render, configure o Static Site assim:
+   Branch: main
+   Root Directory: deixe vazio
+   Build Command: echo ok
+   Publish Directory: .
+6. Salve e faça Manual Deploy > Deploy latest commit.
 
-A página principal é dist/index.html. O convite usa as imagens em dist/assets.
+A página inicial é index.html. O convite inclui confirmação de presença e somente as sugestões de roupa tamanho 4 e sapato 26/27. As quatro imagens estão na raiz e os caminhos do HTML já apontam para elas.
