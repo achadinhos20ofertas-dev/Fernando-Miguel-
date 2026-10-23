@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#091847">
+  <title>Confirmar presença · Fernando Miguel</title>
+  <style>
+    :root{--navy:#071943;--blue:#1477c9;--red:#e52d3e;--gold:#ffc928;--ice:#edf4ff;--ink:#102147;--muted:#51617f}
+    *{box-sizing:border-box}body{margin:0;background:var(--ice);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}.top{background:radial-gradient(ellipse at top,#1d60ad,#071943 72%);color:#fff;padding:26px 16px 32px;border-bottom:7px solid var(--gold)}.wrap{width:min(100% - 28px,680px);margin:auto}.back{color:#d8eaff;text-decoration:none;font-weight:750}.eyebrow{text-transform:uppercase;letter-spacing:.12em;color:#ffc928;font-size:.78rem;font-weight:900}.top .eyebrow{color:#ffc928;margin-top:32px}.top h1{font-size:clamp(2rem,8vw,3rem);line-height:1.02;margin:8px 0}.top p{margin:0;color:#d4e5ff}.form-card{background:#fff;margin:24px auto;padding:22px;border-radius:20px;box-shadow:0 12px 32px #0a235415;border:1px solid #dce7f3}.guest-card{border:1px solid #dbe5f0;border-radius:16px;padding:16px;margin:14px 0;background:#fbfdff}.guest-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.guest-head h2{font-size:1.05rem;margin:0}.remove{border:0;background:#fff0f0;color:#a4262c;font-weight:800;border-radius:9px;padding:8px 10px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px}.field label{font-weight:750;font-size:.91rem}.field input,.field select{width:100%;border:1.5px solid #b9c8dc;border-radius:11px;padding:12px;font:inherit;color:var(--ink);background:#fff}.field input:focus,.field select:focus{outline:3px solid #bcdcff;border-color:#2872bd}.age{grid-column:1/-1}.hint{font-size:.83rem;color:var(--muted);margin:6px 0 0}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.btn{border:0;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font:inherit;font-weight:850;padding:13px 17px;border-radius:12px;background:var(--gold);color:#13203c;box-shadow:0 5px 0 #c28a2d;cursor:pointer}.btn.secondary{background:#1477c9;color:#fff;box-shadow:0 5px 0 #cbd9ea}.privacy{font-size:.82rem;color:var(--muted);margin:16px 0 0}.error{display:none;color:#9c1c26;background:#fff0f0;padding:11px 13px;border-radius:10px;font-weight:700;margin-top:12px}.footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 18px 32px}
+    @media(max-width:520px){.grid{grid-template-columns:1fr}.age{grid-column:auto}.form-card{padding:16px}.actions .btn{width:100%}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap"><a class="back" href="/">← Voltar ao convite</a><div class="eyebrow">Lista de convidados</div><h1>Quem vem para a super festa?</h1><p>Preencha seus dados e adicione cada acompanhante.</p></div></header>
+  <main class="wrap"><form id="rsvp-form" class="form-card">
+    <div id="guests"></div>
+    <button class="btn secondary" type="button" id="add-guest">＋ Adicionar acompanhante</button>
+    <p class="hint">Para as opções de criança: até 5 anos ou de 6 a 11 anos.</p>
+    <div id="form-error" class="error" role="alert"></div>
+    <div class="actions"><button class="btn" type="submit">Confirmar presença →</button></div>
+  </form></main>
+  <footer class="footer">Fernando Miguel · 4 anos</footer>
+  <template id="guest-template"><section class="guest-card">
+    <div class="guest-head"><h2></h2><button class="remove" type="button" aria-label="Remover acompanhante">Remover</button></div>
+    <div class="grid">
+      <div class="field"><label>Nome</label><input name="firstName" autocomplete="given-name" required maxlength="50"></div>
+      <div class="field"><label>Sobrenome</label><input name="lastName" autocomplete="family-name" required maxlength="60"></div>
+      <div class="field age"><label>Faixa etária</label><select name="ageGroup" required><option value="">Selecione</option><option value="adulto">Adulto (18 anos ou mais)</option><option value="adolescente">Adolescente (12 a 17 anos)</option><option value="crianca_6_11">Criança (6 a 11 anos)</option><option value="crianca_ate_5">Criança (até 5 anos)</option></select></div>
+    </div>
+  </section></template>
+  <script>
+    const guests=document.querySelector('#guests');
+    const template=document.querySelector('#guest-template');
+    const errorBox=document.querySelector('#form-error');
+    function addGuest(isMain=false){
+      const fragment=template.content.cloneNode(true);
+      const card=fragment.querySelector('.guest-card');
+      const index=guests.children.length;
+      card.querySelector('h2').textContent=isMain?'Você':'Acompanhante '+index;
+      const remove=card.querySelector('.remove');
+      if(isMain) remove.hidden=true;
+      remove.addEventListener('click',()=>{card.remove();renumber()});
+      guests.append(fragment);
+    }
+    function renumber(){[...guests.children].forEach((card,i)=>{card.querySelector('h2').textContent=i===0?'Você':'Acompanhante '+i;card.querySelector('.remove').hidden=i===0})}
+    addGuest(true);
+    document.querySelector('#add-guest').addEventListener('click',()=>{if(guests.children.length>=12){errorBox.textContent='O limite é de 12 pessoas por confirmação.';errorBox.style.display='block';return}errorBox.style.display='none';addGuest()});
+    document.querySelector('#rsvp-form').addEventListener('submit',event=>{
+      event.preventDefault();
+      const people=[...guests.children].map(card=>({nome:card.querySelector('[name="firstName"]').value.trim(),sobrenome:card.querySelector('[name="lastName"]').value.trim(),faixaEtaria:card.querySelector('[name="ageGroup"]').value}));
+      if(people.some(p=>!p.nome||!p.sobrenome||!p.faixaEtaria)){errorBox.textContent='Complete nome, sobrenome e faixa etária de todas as pessoas.';errorBox.style.display='block';return}
+      sessionStorage.setItem('fernandoMiguelRSVP',JSON.stringify(people));
+      sessionStorage.removeItem('fernandoMiguelGiftChoice');
+      location.href='/presentes-atualizado.html?versao=20';
+    });
+  </script>
+</body>
+</html>
