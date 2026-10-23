@@ -1,16 +1,16 @@
-CONVITE FERNANDO MIGUEL — ARQUIVOS PRONTOS PARA GITHUB E RENDER
+CONVITE FERNANDO MIGUEL — PACOTE ATUALIZADO
 
-Os arquivos deste ZIP já estão todos juntos na raiz. Não crie pastas.
+Este ZIP já deixa todos os arquivos juntos na raiz, sem pastas. Inclui a entrada em formato de carta com tema dos Vingadores, confirmação de presença e somente duas sugestões: roupa tamanho 4 e calçado 26/27. As imagens foram ligadas aos arquivos que ficam na raiz.
 
-1. Extraia o ZIP no celular ou computador.
-2. No GitHub, abra o repositório Fernando-Miguel-.
-3. Toque em Add file > Upload files e envie TODOS os arquivos extraídos.
-4. Confirme em Commit changes.
-5. No Render, configure o Static Site assim:
-   Branch: main
-   Root Directory: deixe vazio
-   Build Command: echo ok
-   Publish Directory: .
-6. Salve e faça Manual Deploy > Deploy latest commit.
+PARA ATUALIZAR O GITHUB
+1. Extraia o ZIP.
+2. Abra o repositório Fernando-Miguel- no GitHub.
+3. Use Add file > Upload files e selecione todos os arquivos extraídos, diretamente na raiz do repositório.
+4. Confirme com Commit changes.
 
-A página inicial é index.html. O convite inclui confirmação de presença e somente as sugestões de roupa tamanho 4 e sapato 26/27. As quatro imagens estão na raiz e os caminhos do HTML já apontam para elas.
+PARA PUBLICAR NO RENDER
+- Branch: main
+- Root Directory: vazio
+- Build Command: echo ok
+- Publish Directory: .
+Salve e escolha Manual Deploy > Deploy latest commit.
