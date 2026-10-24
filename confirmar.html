@@ -48,15 +48,9 @@
       event.preventDefault();
       const people=[...guests.children].map(card=>({nome:card.querySelector('[name="firstName"]').value.trim(),sobrenome:card.querySelector('[name="lastName"]').value.trim(),faixaEtaria:card.querySelector('[name="ageGroup"]').value}));
       if(people.some(p=>!p.nome||!p.sobrenome||!p.faixaEtaria)){errorBox.textContent='Complete nome, sobrenome e faixa etária de todas as pessoas.';errorBox.style.display='block';return}
-      const ageLabels={adulto:'Adulto',adolescente:'Adolescente',crianca_6_11:'Criança de 6 a 11 anos',crianca_ate_5:'Criança até 5 anos'};
-      const lines=people.map(p=>`• ${p.nome} ${p.sobrenome} — ${ageLabels[p.faixaEtaria]}`).join('
-');
-      const message=`Oi! Confirmo presença no aniversário do Fernando Miguel.
-
-Convidados:
-${lines}`;
-      const whatsappUrl=`https://wa.me/5515996411491?text=${encodeURIComponent(message)}`;
-      window.location.href=whatsappUrl;
+      sessionStorage.setItem('fernandoMiguelRSVP',JSON.stringify(people));
+      sessionStorage.removeItem('fernandoMiguelGiftChoice');
+      location.href='/presentes-atualizado.html?versao=20';
     });
   </script>
 </body>
