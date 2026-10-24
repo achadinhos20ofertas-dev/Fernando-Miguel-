@@ -15,8 +15,8 @@
     <p id="guest-note" class="guest-note"></p>
     <h2 class="section-title">Sugestões de presente</h2>
     <div class="grid">
-      <article class="gift" data-gift-id="101" data-gift-label="Roupa tamanho 4"><div class="gift-img"><img src="/roupa-tamanho-4.jpg" alt="Roupa infantil do Homem-Aranha" role="button" tabindex="0" aria-label="Ampliar imagem da roupa tamanho 4" loading="lazy"></div><div class="gift-body"><div class="gift-size">Tamanho 4</div><button class="btn buy" type="button" aria-pressed="false">Sugestão</button><div class="gift-status" role="status"></div></div></article>
-      <article class="gift" data-gift-id="102" data-gift-label="Sapato tamanho 26/27"><div class="gift-img"><img src="/tenis.jpg" alt="Tênis infantil do Homem-Aranha" role="button" tabindex="0" aria-label="Ampliar imagem do sapato tamanho 26/27" loading="lazy"></div><div class="gift-body"><div class="gift-size">26/27</div><button class="btn buy" type="button" aria-pressed="false">Sugestão</button><div class="gift-status" role="status"></div></div></article>
+      <article class="gift" data-gift-id="101" data-gift-label="Roupa tamanho 4"><div class="gift-img"><img src="/roupa-tamanho-4.jpg" alt="Roupa infantil do Homem-Aranha" role="button" tabindex="0" aria-label="Ampliar imagem da roupa tamanho 4" loading="lazy"></div><div class="gift-body"><button class="btn buy" type="button" aria-pressed="false">Vou comprar</button><div class="gift-status" role="status"></div></div></article>
+      <article class="gift" data-gift-id="102" data-gift-label="Sapato tamanho 26/27"><div class="gift-img"><img src="/tenis.jpg" alt="Tênis infantil do Homem-Aranha" role="button" tabindex="0" aria-label="Ampliar imagem do sapato tamanho 26/27" loading="lazy"></div><div class="gift-body"><button class="btn buy" type="button" aria-pressed="false">Vou comprar</button><div class="gift-status" role="status"></div></div></article>
     </div>
 
     <section class="selection-panel" aria-label="Enviar confirmação e escolha">
@@ -46,7 +46,7 @@
       choice=next;sessionStorage.setItem('fernandoMiguelGiftChoice',JSON.stringify(choice));
       document.querySelectorAll('.gift').forEach(card=>{
         const id=Number(card.dataset.giftId),button=card.querySelector('.buy'),selected=choice.gifts.includes(id);
-        button.classList.toggle('selected',selected);button.textContent=selected?'Escolhido ✓':'Sugestão';button.setAttribute('aria-pressed',String(selected));
+        button.classList.toggle('selected',selected);button.textContent=selected?'Escolhido ✓':'Vou comprar';button.setAttribute('aria-pressed',String(selected));
       });
       const picked=choice.gifts.map(i=>i===101?'Roupa tamanho 4':'Sapato tamanho 26/27');
       selectionStatus.textContent=picked.length?`Você escolheu: ${picked.join(' e ')}.`:'Escolha roupa, sapato ou os dois.';
@@ -70,4 +70,3 @@
   </script>
 </body>
 </html>
-
