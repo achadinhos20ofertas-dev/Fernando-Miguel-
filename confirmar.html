@@ -12,7 +12,14 @@
 <body>
   <header class="top"><div class="wrap"><a class="back" href="/">← Voltar ao convite</a><div class="eyebrow">Lista de convidados</div><h1>Quem vem para a super festa?</h1><p>Preencha seus dados e adicione cada acompanhante.</p></div></header>
   <main class="wrap"><form id="rsvp-form" class="form-card">
-    <div id="guests"></div>
+    <div id="guests"><section class="guest-card">
+      <div class="guest-head"><h2>Você</h2></div>
+      <div class="grid">
+        <div class="field"><label>Nome</label><input name="firstName" autocomplete="given-name" required maxlength="50"></div>
+        <div class="field"><label>Sobrenome</label><input name="lastName" autocomplete="family-name" required maxlength="60"></div>
+        <div class="field age"><label>Faixa etária</label><select name="ageGroup" required><option value="">Selecione</option><option value="adulto">Adulto (18 anos ou mais)</option><option value="adolescente">Adolescente (12 a 17 anos)</option><option value="crianca_6_11">Criança (6 a 11 anos)</option><option value="crianca_ate_5">Criança (até 5 anos)</option></select></div>
+      </div>
+    </section></div>
     <button class="btn secondary" type="button" id="add-guest">＋ Adicionar acompanhante</button>
     <p class="hint">Para as opções de criança: até 5 anos ou de 6 a 11 anos.</p>
     <div id="form-error" class="error" role="alert"></div>
@@ -42,15 +49,19 @@
       guests.append(fragment);
     }
     function renumber(){[...guests.children].forEach((card,i)=>{card.querySelector('h2').textContent=i===0?'Você':'Acompanhante '+i;card.querySelector('.remove').hidden=i===0})}
-    addGuest(true);
     document.querySelector('#add-guest').addEventListener('click',()=>{if(guests.children.length>=12){errorBox.textContent='O limite é de 12 pessoas por confirmação.';errorBox.style.display='block';return}errorBox.style.display='none';addGuest()});
     document.querySelector('#rsvp-form').addEventListener('submit',event=>{
       event.preventDefault();
       const people=[...guests.children].map(card=>({nome:card.querySelector('[name="firstName"]').value.trim(),sobrenome:card.querySelector('[name="lastName"]').value.trim(),faixaEtaria:card.querySelector('[name="ageGroup"]').value}));
       if(people.some(p=>!p.nome||!p.sobrenome||!p.faixaEtaria)){errorBox.textContent='Complete nome, sobrenome e faixa etária de todas as pessoas.';errorBox.style.display='block';return}
-      sessionStorage.setItem('fernandoMiguelRSVP',JSON.stringify(people));
-      sessionStorage.removeItem('fernandoMiguelGiftChoice');
-      location.href='/presentes-atualizado.html?versao=20';
+      const ageLabels={adulto:'Adulto',adolescente:'Adolescente',crianca_6_11:'Criança de 6 a 11 anos',crianca_ate_5:'Criança até 5 anos'};
+      const lines=people.map(p=>`• ${p.nome} ${p.sobrenome} — ${ageLabels[p.faixaEtaria]}`).join('\n');
+      const message=`Oi! Confirmo presença no aniversário do Fernando Miguel.
+
+Convidados:
+${lines}`;
+      const whatsappUrl=`https://wa.me/5515996411491?text=${encodeURIComponent(message)}`;
+      window.location.href=whatsappUrl;
     });
   </script>
 </body>
